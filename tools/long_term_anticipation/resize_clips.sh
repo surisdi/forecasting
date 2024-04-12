@@ -14,7 +14,7 @@
 #SBATCH --requeue
 
 source ~/.bashrc
-cd /path/to/LTA/repo
+cd /proj/vondrick/didac/code/forecasting
 
 EGO4D_CLIP_DIR=data/long_term_anticipation/clips_hq/
 TARGET_DIR=data/long_term_anticipation/clips/

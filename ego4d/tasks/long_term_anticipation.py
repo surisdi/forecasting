@@ -283,7 +283,8 @@ class LongTermAnticipationTask(VideoTask):
                 pred_dict[test_outputs['last_clip_ids'][idx]] = {
                     'verb': test_outputs['verb_preds'][idx].cpu().tolist(),
                     'noun': test_outputs['noun_preds'][idx].cpu().tolist(),
-                }       
-            json.dump(pred_dict, open('outputs.json', 'w'))
+                }
+            print('SAVING!!!')
+            json.dump(pred_dict, open('/proj/vondrick/didac/outputs.json', 'w'))
 
 

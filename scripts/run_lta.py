@@ -227,7 +227,7 @@ def main(cfg):
         max_epochs=cfg.SOLVER.MAX_EPOCH,
         num_sanity_val_steps=3,
         benchmark=True,
-        log_gpu_memory="min_max",
+        # log_gpu_memory="min_max",
         replace_sampler_ddp=False,
         fast_dev_run=cfg.FAST_DEV_RUN,
         default_root_dir=cfg.OUTPUT_DIR,

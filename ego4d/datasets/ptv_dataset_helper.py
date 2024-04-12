@@ -177,7 +177,6 @@ class LabeledVideoDataset(torch.utils.data.IterableDataset):
                     )
                     continue
 
-
             if len(decoded_clips) == 1:
                 frames = decoded_clips[0]["video"]
                 audio_samples = decoded_clips[0]["audio"]
@@ -366,15 +365,15 @@ def clip_recognition_dataset(
         # (video_paths, annotation_dict). For recognition, the annotation_dict contains
         # the verb and noun label, and the annotation boundaries.
         untrimmed_clip_annotations = []
-        for entry in annotations:
+        for entry in annotations['clips']:
             untrimmed_clip_annotations.append(
                 (
                     os.path.join(video_path_prefix, f'{entry["clip_uid"]}.mp4'),
                     {
                         "clip_start_sec": entry['action_clip_start_sec'],
                         "clip_end_sec": entry['action_clip_end_sec'],
-                        "noun_label": entry['noun_label'],
-                        "verb_label": entry['verb_label'],
+                        "noun_label": entry['noun_label'] if 'noun_label' in entry else -1,
+                        "verb_label": entry['verb_label'] if 'noun_label' in entry else -1,
                         "action_idx": entry['action_idx'],
                     },
                 )
@@ -447,7 +446,7 @@ def clip_forecasting_dataset(
 
             # Extract forecasting annotations from video clips.
             for i in range(
-                len(video_clips) - num_future_actions - num_input_actions
+                len(video_clips) - num_future_actions - num_input_actions  # TODO there should be a +1!! The last clip is not being used
             ):
                 input_clips = copy.deepcopy(video_clips[i : i + num_input_actions])
                 forecast_clips = copy.deepcopy(

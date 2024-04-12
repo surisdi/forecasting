@@ -87,7 +87,7 @@ def edit_distance(preds, labels):
     N, Z, K = preds.shape
     dists = []
     for n in range(N):
-        dist = min([editdistance.eval(preds[n, :, k], labels[n])/Z for k in range(K)])
+        dist = min([editdistance.eval(preds[n, :, k].tolist(), labels[n].tolist())/Z for k in range(K)])
         dists.append(dist)
     return np.mean(dists)
 
@@ -98,8 +98,10 @@ def distributed_edit_distance(preds, labels):
 
 def AUED(preds, labels):
     N, Z, K = preds.shape
-    preds = preds.numpy()  # (N, Z, K)
-    labels = labels.squeeze(-1).numpy()  # (N, Z)
+    labels = labels.squeeze(-1)
+    if type(preds) != np.ndarray:
+        preds = preds.numpy()  # (N, Z, K)
+        labels = labels.numpy()  # (N, Z)
     ED = np.vstack(
         [edit_distance(preds[:, :z], labels[:, :z]) for z in range(1, Z + 1)]
     )

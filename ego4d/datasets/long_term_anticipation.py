@@ -43,7 +43,12 @@ class Ego4dRecognition(torch.utils.data.Dataset):
         ) / self.cfg.DATA.TARGET_FPS
         clip_sampler = make_clip_sampler(clip_sampler_type, clip_duration)
 
-        mode_ = 'test_unannotated' if mode=='test' else mode
+        # TODO go back to test mode. This is to evaluate the validation set
+        # mode_ = 'test_unannotated' if mode=='test' else mode
+        mode_ = 'val' if mode=='test' else mode
+
+
+
         data_path = os.path.join(self.cfg.DATA.PATH_TO_DATA_DIR, f'fho_lta_{mode_}.json')
         
         self.dataset = ptv_dataset_helper.clip_recognition_dataset(
@@ -116,7 +121,13 @@ class Ego4dLongTermAnticipation(torch.utils.data.Dataset):
         ) / self.cfg.DATA.TARGET_FPS
         clip_sampler = make_clip_sampler(clip_sampler_type, clip_duration)
 
-        mode_ = 'test_unannotated' if mode=='test' else mode
+        # TODO GO BACK
+        # mode_ = 'test_unannotated' if mode=='test' else mode
+        mode_ = 'val' if mode=='test' else mode
+
+
+
+
         # [!!]
         if mode == 'test' and cfg.TEST.EVAL_VAL:
             mode_ = 'val'

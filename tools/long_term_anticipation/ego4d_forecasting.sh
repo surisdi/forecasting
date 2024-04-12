@@ -60,3 +60,18 @@ run slowfast_trf \
 # # Debug locally using a smaller batch size / fewer GPUs
 # CLUSTER_ARGS="NUM_GPUS 2 TRAIN.BATCH_SIZE 8 TEST.BATCH_SIZE 32"
 
+
+
+
+
+--job_name slowfast_trf
+--working_directory ${WORK_DIR}
+--cfg /proj/vondrick/didac/code/forecasting/configs/Ego4dLTA/MULTISLOWFAST_8x8_R101.yaml
+DATA.PATH_TO_DATA_DIR /proj/vondrick/didac/code/forecasting/data/long_term_anticipation/annotations/
+DATA.PATH_PREFIX /proj/vondrick/didac/code/forecasting/data/long_term_anticipation/clips/
+CHECKPOINT_LOAD_MODEL_HEAD False
+MODEL.FREEZE_BACKBONE True
+DATA.CHECKPOINT_MODULE_FILE_PATH /proj/vondrick/didac/code/forecasting/pretrained_models/long_term_anticipation/ego4d_slowfast8x8.ckpt
+FORECASTING.AGGREGATOR TransformerAggregator
+FORECASTING.DECODER MultiHeadDecoder
+FORECASTING.NUM_INPUT_CLIPS 4
